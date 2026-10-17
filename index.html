@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Review Flower Garden | Amazon Books Reviews</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Pemetaan modul Three.js untuk visualisasi 3D -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+        }
+    }
+    </script>
+
+    <script type="module" src="script.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- Header -->
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon">✿</div>
+                <div>
+                    <h1>Review Flower Garden</h1>
+                    <p>Amazon Books Reviews · Interactive 3D Visualization</p>
+                </div>
+            </div>
+
+            <div class="header-status">
+                <span class="status-dot"></span>
+                <span id="statusText">Menyiapkan taman...</span>
+            </div>
+        </header>
+
+        <!-- Ringkasan data -->
+        <section class="stats-panel">
+            <div class="stat-card">
+                <span class="stat-label">TOTAL BUNGA</span>
+                <strong id="totalReviews">—</strong>
+                <small>Ulasan divisualisasikan</small>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">RATA-RATA RATING</span>
+                <strong id="averageRating">—</strong>
+                <small>Dari skala 1–5</small>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">TAHUN ULASAN</span>
+                <strong id="yearRange">—</strong>
+                <small>Rentang tahun data</small>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">RATA-RATA KATA</span>
+                <strong id="averageWords">—</strong>
+                <small>Kata per ulasan</small>
+            </div>
+        </section>
+
+        <!-- Area visualisasi -->
+        <main class="main-layout">
+
+            <section class="garden-panel">
+                <div class="garden-heading">
+                    <div>
+                        <h2>🌷 The Review Garden</h2>
+                        <p>Setiap bunga merepresentasikan satu ulasan buku.</p>
+                    </div>
+
+                    <div class="view-controls">
+                        <button id="resetView" type="button">Reset View</button>
+                        <button id="toggleRotation" type="button">Jeda Rotasi</button>
+                    </div>
+                </div>
+
+                <div id="gardenContainer">
+                    <div id="loadingMessage">
+                        <div class="loading-flower">✿</div>
+                        <h3>Menumbuhkan taman bunga...</h3>
+                        <p>Memuat data ulasan dan membangun visualisasi 3D.</p>
+                    </div>
+                </div>
+
+                <div class="garden-footer">
+                    <span>🖱️ Seret untuk memutar</span>
+                    <span>🔎 Gulir untuk zoom</span>
+                    <span>🌸 Klik bunga untuk detail</span>
+                </div>
+            </section>
+
+            <!-- Panel detail dan legenda -->
+            <aside class="side-panel">
+
+                <section class="info-card">
+                    <h3>🌼 Detail Ulasan</h3>
+
+                    <div id="emptySelection">
+                        <div class="empty-flower">❀</div>
+                        <p>Pilih salah satu bunga untuk melihat informasi ulasannya.</p>
+                    </div>
+
+                    <div id="reviewDetails" hidden>
+                        <div class="rating-badge" id="detailRating">★ —</div>
+
+                        <h4 id="detailTitle">Judul buku</h4>
+
+                        <div class="detail-row">
+                            <span>Tahun</span>
+                            <strong id="detailYear">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Jumlah kata</span>
+                            <strong id="detailWords">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Jumlah karakter</span>
+                            <strong id="detailCharacters">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Helpfulness</span>
+                            <strong id="detailHelpfulness">—</strong>
+                        </div>
+
+                        <div class="summary-box">
+                            <span>Ringkasan ulasan</span>
+                            <p id="detailSummary">—</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="info-card legend-card">
+                    <h3>🎨 Legenda Visual</h3>
+
+                    <div class="legend-row">
+                        <span class="legend-flower flower-low">✿</span>
+                        <div>
+                            <strong>Rating rendah</strong>
+                            <small>1–2 bintang</small>
+                        </div>
+                    </div>
+
+                    <div class="legend-row">
+                        <span class="legend-flower flower-mid">✿</span>
+                        <div>
+                            <strong>Rating sedang</strong>
+                            <small>3 bintang</small>
+                        </div>
+                    </div>
+
+                    <div class="legend-row">
+                        <span class="legend-flower flower-high">✿</span>
+                        <div>
+                            <strong>Rating tinggi</strong>
+                            <small>4–5 bintang</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="info-card mapping-card">
+                    <h3>🧬 Pemetaan Fitur</h3>
+
+                    <div class="mapping-row">
+                        <span>Ukuran bunga</span>
+                        <strong>Jumlah kata</strong>
+                    </div>
+
+                    <div class="mapping-row">
+                        <span>Warna bunga</span>
+                        <strong>Rating</strong>
+                    </div>
+
+                    <div class="mapping-row">
+                        <span>Posisi vertikal</span>
+                        <strong>Tahun ulasan</strong>
+                    </div>
+
+                    <div class="mapping-row">
+                        <span>Panjang kelopak</span>
+                        <strong>Jumlah karakter</strong>
+                    </div>
+
+                    <div class="mapping-row">
+                        <span>Lapisan kelopak</span>
+                        <strong>Helpfulness</strong>
+                    </div>
+                </section>
+
+            </aside>
+        </main>
+
+        <footer class="page-footer">
+            <p>
+                REVIEW FLOWER GARDEN · Text Feature Engineering ·
+                Three.js Interactive Visualization
+            </p>
+        </footer>
+
+    </div>
+</body>
+</html>
